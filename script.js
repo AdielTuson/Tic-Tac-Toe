@@ -4,8 +4,8 @@ const createPlayer = (name, symbol) => {
         symbol 
     };
 };
-const playerOne = createPlayer('player one', 'X');
-const playerTwo = createPlayer('player two', 'O');
+// const playerOne = createPlayer('player one', 'X');
+// const playerTwo = createPlayer('player two', 'O');
 
 
 const Gameboard = (function () {
@@ -26,7 +26,7 @@ const Gameboard = (function () {
 
 
     const placeMark = (row, column, playerMark) => {
-        if (row < 0 || row > 2 || column < 0 || column > 2 || board[row][column] !== " ") return;
+        if (board[row][column] !== " ") return;
         board[row][column] = playerMark;
         console.log(board)
     };
@@ -53,11 +53,14 @@ function GameController() {
 
     const playTurn = () => {
         const row = prompt('Pick a row');
+        if (row < 0 || row > 2 || row === '') return;
         console.log(row);
         const column = prompt('pick a column');
+        if (column < 0 || column > 2 || column === '') return;
         console.log(column);
         
         Gameboard.placeMark(row, column, currentPlayer.symbol);
+        changePlayer();
     }
 
     const changePlayer = () => {
@@ -68,19 +71,3 @@ function GameController() {
     return { playTurn, changePlayer }
 }
 const game = GameController();
-
-//A function that will change the value of the current space in the board
-// function setSpaceValue() {
-//     let value = "";
-
-//     const addMark = (playerMark) => {
-//         value = playerMark;
-//     }
-
-//     const getValue = () => value;
-
-//     return {
-//         addMark,
-//         getValue
-//     };
-// }
