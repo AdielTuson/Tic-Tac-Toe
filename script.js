@@ -46,8 +46,28 @@ const Gameboard = (function () {
 
 
 function GameController() {
+    const playerOne = createPlayer('player one', 'X');
+    const playerTwo = createPlayer('player two', 'O');
+    let currentPlayer = playerOne;
+    console.log(currentPlayer.symbol)
 
+    const playTurn = () => {
+        const row = prompt('Pick a row');
+        console.log(row);
+        const column = prompt('pick a column');
+        console.log(column);
+        
+        Gameboard.placeMark(row, column, currentPlayer.symbol);
+    }
+
+    const changePlayer = () => {
+        currentPlayer = currentPlayer === playerOne ? playerTwo : playerOne;
+    }
+
+
+    return { playTurn, changePlayer }
 }
+const game = GameController();
 
 //A function that will change the value of the current space in the board
 // function setSpaceValue() {
