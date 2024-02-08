@@ -41,15 +41,23 @@ const Gameboard = (function () {
     const checkForWin = () => {
         //Check rows
         for (let i = 0; i < rows; i++) {
-            if ((board[i][0] !== '') && (board[i][0] === board[i][1]) && (board[i][1] === board[i][2])) return true;
+            if ((board[i][0] !== ' ') && (board[i][0] === board[i][1]) && (board[i][1] === board[i][2])) return true;
         }
         //Check columns
         for (let i = 0; i < columns; i++) {
-            if ((board[0][i] !== '') && (board[0][i] === board[1][i]) && (board[1][i] === board[2][i])) return true;
+            if ((board[0][i] !== ' ') && (board[0][i] === board[1][i]) && (board[1][i] === board[2][i])) return true;
         }
 
         //Check diagnoses
-        // if (board[0][0] === board[1][1] && board[1][1] === board[2][2] || board[2][1] === board[1][1] && board[1][1] === board[0][2]) return true;
+        if (board[1][1] === ' ') return false;
+        
+        if (board[0][0] === board[1][1] && board[1][1] ===
+        board[2][2]) return true;
+        
+        if (board[2][0] === board[1][1] && board[1][1] ===
+        board[0][2]) return true;
+        
+        return false;
     }
 
     return { getBoard, placeMark, displayBoard, checkForWin };
@@ -71,7 +79,7 @@ function GameController() {
         console.log(column);
         
         Gameboard.placeMark(row, column, currentPlayer.symbol);
-        changePlayer();
+        // changePlayer();
         console.log(Gameboard.checkForWin());
     }
 
