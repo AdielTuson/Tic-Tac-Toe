@@ -86,15 +86,24 @@ const GameController = (function () {
         if (column < 0 || column > 2 || column === ' ') return;
         
         Gameboard.placeMark(row, column, currentPlayer.symbol);
+        checkEndGame();
         changePlayer();
-        Gameboard.checkForWin();
-        console.log(Gameboard.checkForWin());
     }
 
     const changePlayer = () => {
         currentPlayer = currentPlayer === playerOne ? playerTwo : playerOne;
     }
 
-    return { playTurn, changePlayer }
+    const checkEndGame = () => {
+        if (Gameboard.checkForWin() === true) {
+            alert(`${currentPlayer.name} is the winner!`);
+        }
+
+        else if (Gameboard.checkForWin() === 'Tie') {
+            alert("It's a tie!");
+        }
+    }
+
+    return { playTurn }
 })();
 // const game = GameController();
