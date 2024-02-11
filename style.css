@@ -7,11 +7,12 @@
 .game-board {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    width: min-content;
+    width: 400px;
+    height: 400px;
+    border: 2px solid black;
+    margin: auto;
 }
 
-.game-board > * {
-    width: 150px;
-    height: 150px;
+.cell {
     border: 2px solid black;
 }

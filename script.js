@@ -10,9 +10,9 @@ const Gameboard = (function () {
     const columns = 3;
     const emptySpace = " ";
     let board = [
-        [" ", " ", " "],
-        [" ", " ", " "],
-        [" ", " ", " "]
+        ["O", "X", "O"],
+        ["O", "O", "X"],
+        ["X", "O", "X"]
     ];
     
     console.log(board)
@@ -114,3 +114,34 @@ function GameController() {
     return { playTurn, resetGame }
 }
 const game = GameController();
+
+
+
+const handleDisplay = {
+    renderBoard: function() {
+        const board = Gameboard.getBoard();
+        const boardElement = document.querySelector('.game-board');
+        for (row of board) {
+            const rowElement = document.createElement('div');
+            rowElement.classList.add('row');
+
+            for (cell of row) {
+                const cellElement = document.createElement('div');
+                cellElement.textContent = cell;
+                cellElement.classList.add('cell');
+                rowElement.appendChild(cellElement);
+            }
+            boardElement.appendChild(rowElement);
+        }
+    },
+
+    placeMark: function() {
+        const boardCells = document.querySelectorAll('.cell');
+        boardCells.forEach((cellElement) => {
+            cellElement.addEventListener('click', () => {
+                const row = 
+                game.playTurn();
+            })
+        })
+    }        
+}
