@@ -9,23 +9,15 @@ const Gameboard = (function () {
     const rows = 3;
     const columns = 3;
     const emptySpace = " ";
-    const board = [
-        // ["X", "O", "O"],
-        // ["O", " O", "X"],
-        // ["X", "X", "O"]
+    let board = [
+        [" ", " ", " "],
+        [" ", " ", " "],
+        [" ", " ", " "]
     ];
     
-    //Will populate the board array
-    for (let i = 0; i < rows; i++) {
-        board[i] = [];
-        for (let j = 0; j < columns; j++) {
-            board[i].push(emptySpace);
-        }
-    }
     console.log(board)
     //Method for getting entire board for our UI
     const getBoard = () => board;
-
 
     const placeMark = (row, column, playerMark) => {
         if (board[row][column] !== emptySpace) return;
@@ -68,14 +60,24 @@ const Gameboard = (function () {
         return false;
     }
 
-    return { getBoard, placeMark, displayBoard, checkForWin };
+    const resetBoard = () => {
+        board = [
+            [" ", " ", " "],
+            [" ", " ", " "],
+            [" ", " ", " "]
+        ];
+    }
+
+    return { getBoard, placeMark, displayBoard, checkForWin , resetBoard };
 })();
 
 
-const GameController = (function () {
+function GameController() {
+    const board = Gameboard;
     const playerOne = createPlayer('player one', 'X');
     const playerTwo = createPlayer('player two', 'O');
     let currentPlayer = playerOne;
+
     console.log(currentPlayer.symbol)
 
     const playTurn = () => {
@@ -85,7 +87,7 @@ const GameController = (function () {
         const column = prompt('pick a column');
         if (column < 0 || column > 2 || column === ' ') return;
         
-        Gameboard.placeMark(row, column, currentPlayer.symbol);
+        board.placeMark(row, column, currentPlayer.symbol);
         checkEndGame();
         changePlayer();
     }
@@ -95,15 +97,20 @@ const GameController = (function () {
     }
 
     const checkEndGame = () => {
-        if (Gameboard.checkForWin() === true) {
+        if (board.checkForWin() === true) {
             alert(`${currentPlayer.name} is the winner!`);
         }
 
-        else if (Gameboard.checkForWin() === 'Tie') {
+        else if (board.checkForWin() === 'Tie') {
             alert("It's a tie!");
         }
     }
 
-    return { playTurn }
-})();
-// const game = GameController();
+    const resetGame = () => {
+        board.resetBoard();
+        currentPlayer = playerOne;
+    }
+
+    return { playTurn, resetGame }
+}
+const game = GameController();
