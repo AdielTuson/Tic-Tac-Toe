@@ -10,9 +10,9 @@ const Gameboard = (function () {
     const columns = 3;
     const emptySpace = " ";
     let board = [
-        ["O", "X", "O"],
-        ["O", "O", "X"],
-        ["X", "O", "X"]
+        [" ", " ", " "],
+        [" ", " ", " "],
+        [" ", " ", " "]
     ];
     
     console.log(board)
@@ -80,11 +80,10 @@ function GameController() {
 
     console.log(currentPlayer.symbol)
 
-    const playTurn = () => {
-        const row = prompt('Pick a row');
+    const playTurn = (row, column) => {
+        console.log(row, column)
         if (row < 0 || row > 2 || row === ' ') return;
 
-        const column = prompt('pick a column');
         if (column < 0 || column > 2 || column === ' ') return;
         
         board.placeMark(row, column, currentPlayer.symbol);
@@ -96,13 +95,15 @@ function GameController() {
         currentPlayer = currentPlayer === playerOne ? playerTwo : playerOne;
     }
 
+    const getCurrentPlayer = () => currentPlayer;
+
     const checkEndGame = () => {
         if (board.checkForWin() === true) {
-            alert(`${currentPlayer.name} is the winner!`);
+            console.log(`${currentPlayer.name} is the winner!`);
         }
 
         else if (board.checkForWin() === 'Tie') {
-            alert("It's a tie!");
+            console.log("It's a tie!");
         }
     }
 
@@ -111,37 +112,61 @@ function GameController() {
         currentPlayer = playerOne;
     }
 
-    return { playTurn, resetGame }
+    return { playTurn, resetGame, getCurrentPlayer }
 }
 const game = GameController();
 
 
 
 const handleDisplay = {
-    renderBoard: function() {
-        const board = Gameboard.getBoard();
-        const boardElement = document.querySelector('.game-board');
-        for (row of board) {
-            const rowElement = document.createElement('div');
-            rowElement.classList.add('row');
+    boardArray: Gameboard.getBoard(),
 
+    boardElement: document.querySelector('.game-board'),
+
+    renderBoard: function() {
+        let rowIndex = 0;
+
+        for (row of this.boardArray) {
+            let columnIndex = 0;
             for (cell of row) {
                 const cellElement = document.createElement('div');
-                cellElement.textContent = cell;
+                cellElement.setAttribute('data-row', rowIndex);
+                cellElement.setAttribute('data-column', columnIndex);
                 cellElement.classList.add('cell');
-                rowElement.appendChild(cellElement);
+                this.boardElement.appendChild(cellElement);
+                columnIndex++;
             }
-            boardElement.appendChild(rowElement);
+            rowIndex++;
         }
     },
 
     placeMark: function() {
         const boardCells = document.querySelectorAll('.cell');
-        boardCells.forEach((cellElement) => {
-            cellElement.addEventListener('click', () => {
-                const row = 
-                game.playTurn();
+        boardCells.forEach((cell) => {
+            cell.addEventListener('click', () => {
+                const cellRow = cell.getAttribute('data-row');
+                const cellColumn = cell.getAttribute('data-column');
+
+                //Prevent placing mark in a non empty space
+                if (cell.textContent !== '') return;
+
+                updateCell(cell);
+                game.playTurn(cellRow, cellColumn);
             })
         })
-    }        
+
+        const getPlayerMark = () => game.getCurrentPlayer().symbol;
+
+        const updateCell = (cellElement) => {
+            cellElement.textContent = getPlayerMark();
+        }
+    },
+
+    restartGame: function() {
+        game.resetGame();
+        this.boardElement.innerHTML = '';
+        this.renderBoard();
+    }
 }
+handleDisplay.renderBoard();
+handleDisplay.placeMark();
