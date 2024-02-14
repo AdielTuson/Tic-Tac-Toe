@@ -78,8 +78,6 @@ function GameController() {
     const playerTwo = createPlayer('player two', 'O');
     let currentPlayer = playerOne;
 
-    console.log(currentPlayer.symbol)
-
     const playTurn = (row, column) => {
         console.log(row, column)
         if (row < 0 || row > 2 || row === ' ') return;
@@ -128,32 +126,36 @@ const handleDisplay = {
         }
     },
 
-    placeMark: function() {
+    handleTurn: function() {
         const boardCells = document.querySelectorAll('.cell');
         boardCells.forEach((cell) => {
             cell.addEventListener('click', () => {
                 const cellRow = cell.getAttribute('data-row');
                 const cellColumn = cell.getAttribute('data-column');
+                const player = getPlayerName();
 
                 //Prevent placing mark in a non empty space
                 if (cell.textContent !== '') return;
+
                 updateCellContent(cell);
                 game.playTurn(cellRow, cellColumn);
-                handleWin();
+                handleWin(player);
             })
         })
 
         const getPlayerMark = () => game.getCurrentPlayer().symbol;
 
+        const getPlayerName = () => game.getCurrentPlayer().name;
+
         const updateCellContent = (cellElement) => {
             cellElement.textContent = getPlayerMark();
         }
 
-        const handleWin = () => {
+        const handleWin = (winner) => {
             const isWin = Gameboard.checkForWin();
             if (isWin === false) return;
             if (isWin === true) {
-                console.log("Win!")
+                console.log(winner);
                 this.resetDisplay();
             }
             else if (isWin === "Tie") {
@@ -167,9 +169,9 @@ const handleDisplay = {
         game.resetGame();
         this.boardElement.innerHTML = '';
         this.renderBoard();
-        this.placeMark();
+        this.handleTurn();
     }
 
 }
 handleDisplay.renderBoard();
-handleDisplay.placeMark();
+handleDisplay.handleTurn();
