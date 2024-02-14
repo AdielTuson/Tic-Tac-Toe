@@ -87,7 +87,6 @@ function GameController() {
         if (column < 0 || column > 2 || column === ' ') return;
         
         board.placeMark(row, column, currentPlayer.symbol);
-        checkEndGame();
         changePlayer();
     }
 
@@ -96,16 +95,6 @@ function GameController() {
     }
 
     const getCurrentPlayer = () => currentPlayer;
-
-    const checkEndGame = () => {
-        if (board.checkForWin() === true) {
-            console.log(`${currentPlayer.name} is the winner!`);
-        }
-
-        else if (board.checkForWin() === 'Tie') {
-            console.log("It's a tie!");
-        }
-    }
 
     const resetGame = () => {
         board.resetBoard();
@@ -117,16 +106,15 @@ function GameController() {
 const game = GameController();
 
 
-
+//An obj to handle logic and render to UI
 const handleDisplay = {
-    boardArray: Gameboard.getBoard(),
-
     boardElement: document.querySelector('.game-board'),
 
     renderBoard: function() {
+        const boardArray = Gameboard.getBoard();
         let rowIndex = 0;
 
-        for (row of this.boardArray) {
+        for (row of boardArray) {
             let columnIndex = 0;
             for (cell of row) {
                 const cellElement = document.createElement('div');
@@ -149,24 +137,39 @@ const handleDisplay = {
 
                 //Prevent placing mark in a non empty space
                 if (cell.textContent !== '') return;
-
-                updateCell(cell);
+                updateCellContent(cell);
                 game.playTurn(cellRow, cellColumn);
+                handleWin();
             })
         })
 
         const getPlayerMark = () => game.getCurrentPlayer().symbol;
 
-        const updateCell = (cellElement) => {
+        const updateCellContent = (cellElement) => {
             cellElement.textContent = getPlayerMark();
+        }
+
+        const handleWin = () => {
+            const isWin = Gameboard.checkForWin();
+            if (isWin === false) return;
+            if (isWin === true) {
+                console.log("Win!")
+                this.resetDisplay();
+            }
+            else if (isWin === "Tie") {
+                console.log("Tie!")
+                this.resetDisplay();
+            }
         }
     },
 
-    restartGame: function() {
+    resetDisplay: function() {
         game.resetGame();
         this.boardElement.innerHTML = '';
         this.renderBoard();
+        this.placeMark();
     }
+
 }
 handleDisplay.renderBoard();
 handleDisplay.placeMark();
