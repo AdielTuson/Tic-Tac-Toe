@@ -4,15 +4,55 @@
     box-sizing: border-box;
 }
 
+html {
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    --main-color: rgb(255, 177, 255);
+}
+
+body { 
+    width: 100%;
+    min-height: 100vh;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 60px;
+    background-color:var(--main-color);
+}
+
+/* Top section */
+.page-header {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.display-information {
+    font-size: 2rem;
+}
+
+
+/* Main section */
 .game-board {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    width: 400px;
-    height: 400px;
-    border: 2px solid black;
+    gap: 3px;
+    background-color: black;
+    width: clamp(400px, 60%, 500px);
+    aspect-ratio: 1/1;
     margin: auto;
 }
 
 .cell {
-    border: 2px solid black;
+    aspect-ratio: 1/1;
+    display: grid;
+    place-content: center;
+    font-size: 5rem;
+    background-color: var(--main-color);
+}
+
+
+/* Bottom section */
+#reset-game-btn {
+    padding: 5px 20px;
+    font-size: 1.2rem;
 }
