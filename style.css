@@ -59,7 +59,7 @@ body {
 
 
 /* Bottom section */
-#reset-game-btn {
+#new-game-btn {
     padding: 8px 20px;
     font-size: 1.4rem;
     font-weight: bold;
@@ -70,6 +70,6 @@ body {
     border-radius: 5px;
 }
 
-#reset-game-btn:hover {
+#new-game-btn:hover {
     background-color: rgba(200, 198, 198, 0.764);
 }

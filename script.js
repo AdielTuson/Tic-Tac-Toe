@@ -79,7 +79,6 @@ function GameController() {
     let currentPlayer = playerOne;
 
     const playTurn = (row, column) => {
-        console.log(row, column)
         if (row < 0 || row > 2 || row === ' ') return;
 
         if (column < 0 || column > 2 || column === ' ') return;
@@ -127,22 +126,6 @@ const handleDisplay = {
     },
 
     handleTurn: function() {
-        const boardCells = document.querySelectorAll('.cell');
-        boardCells.forEach((cell) => {
-            cell.addEventListener('click', () => {
-                const cellRow = cell.getAttribute('data-row');
-                const cellColumn = cell.getAttribute('data-column');
-                const player = getPlayerName();
-
-                //Prevent placing mark in a non empty space
-                if (cell.textContent !== '') return;
-
-                updateCellContent(cell);
-                game.playTurn(cellRow, cellColumn);
-                handleWin(player);
-            })
-        })
-
         const getPlayerMark = () => game.getCurrentPlayer().symbol;
 
         const getPlayerName = () => game.getCurrentPlayer().name;
@@ -155,17 +138,43 @@ const handleDisplay = {
             const isWin = Gameboard.checkForWin();
             if (isWin === false) return;
             if (isWin === true) {
-                console.log(winner);
-                this.resetDisplay();
+                let message = `${winner} is the winner!`;
+                this.setInformationSection(message);
+                // this.resetDisplay();
             }
             else if (isWin === "Tie") {
-                console.log("Tie!")
-                this.resetDisplay();
+                let message = "Its a Tie!"
+                this.setInformationSection(message);
+                // this.resetDisplay();
             }
         }
+
+        const boardCells = document.querySelectorAll('.cell');
+        boardCells.forEach((cell) => {
+            cell.addEventListener('click', () => {
+                const cellRow = cell.getAttribute('data-row');
+                const cellColumn = cell.getAttribute('data-column');
+                const thisPlayer = getPlayerName();
+
+                //Prevent placing mark in a non empty space
+                if (cell.textContent !== '') return;
+
+                updateCellContent(cell);
+                
+                game.playTurn(cellRow, cellColumn);
+                this.setInformationSection(`${getPlayerName()}'s turn`);
+                handleWin(thisPlayer);
+            })
+        })
+    },
+
+    setInformationSection : function(information) {
+        const informationSection = document.querySelector('.display-information');
+        informationSection.textContent = information;
     },
 
     resetDisplay: function() {
+        this.setInformationSection("Choose youre mark")
         game.resetGame();
         this.boardElement.innerHTML = '';
         this.renderBoard();
@@ -173,5 +182,12 @@ const handleDisplay = {
     }
 
 }
+
+//New game btn
+const newGameBtn = document.querySelector('#new-game-btn');
+newGameBtn.addEventListener('click', () => {
+    handleDisplay.resetDisplay();
+})
+
 handleDisplay.renderBoard();
 handleDisplay.handleTurn();
