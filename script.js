@@ -189,5 +189,5 @@ newGameBtn.addEventListener('click', () => {
     handleDisplay.resetDisplay();
 })
 
-handleDisplay.renderBoard();
-handleDisplay.handleTurn();
+handleDisplay.resetDisplay();
+// handleDisplay.handleTurn();
