@@ -189,5 +189,10 @@ newGameBtn.addEventListener('click', () => {
     handleDisplay.resetDisplay();
 })
 
-handleDisplay.resetDisplay();
-// handleDisplay.handleTurn();
+// handleDisplay.resetDisplay();
+
+
+//Get player names
+const dialog = document.querySelector('.enter-names-dialog');
+dialog.showModal();
+
