@@ -15,6 +15,20 @@
         </div>
     </div>
 
+    <dialog class="enter-names-dialog" open="">
+        <form class="enter-names-form" action="get" method="dialog">
+            <label for="player-one-name">Player one (x):</label>
+            <input type="text" id="player-one-name"
+            name="player-one-name" required>
+
+            <label for="player-two-name">Player two (O):</label>
+            <input type="text" id="player-two-name"
+            name="player-two-name" required>
+
+            <button id="start-game-btn">Start Game</button>
+        </form>
+    </dialog>
+
     <div class="main">
         <div class="player-info">
             <p class="player-name">player one</p>

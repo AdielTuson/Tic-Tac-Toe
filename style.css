@@ -21,6 +21,14 @@ body {
     background: var(--main-color);
 }
 
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: 100%;
+}
+
 /* Top section */
 .page-header {
     font-size: 3rem;
@@ -87,3 +95,19 @@ body {
 #new-game-btn:hover {
     background-color: rgba(200, 198, 198, 0.764);
 }
+
+
+/* Dialog section */
+.enter-names-form {
+    display: grid;
+    grid-template-columns: auto auto;
+    place-items: center;
+    gap: 25px 2px;
+    padding: 20px;
+}
+
+#start-game-btn {
+    grid-column: span 2;
+}
+
+
