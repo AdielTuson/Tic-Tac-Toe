@@ -91,6 +91,10 @@ function GameController() {
         currentPlayer = currentPlayer === playerOne ? playerTwo : playerOne;
     }
 
+    const setPlayerOneName = (name) => playerOne.name = name;
+    const setPlayerTwoName = (name) => playerTwo.name = name;
+
+
     const getCurrentPlayer = () => currentPlayer;
 
     const resetGame = () => {
@@ -98,7 +102,7 @@ function GameController() {
         currentPlayer = playerOne;
     }
 
-    return { playTurn, resetGame, getCurrentPlayer }
+    return { playTurn, resetGame, getCurrentPlayer, setPlayerOneName, setPlayerTwoName }
 }
 const game = GameController();
 
@@ -174,7 +178,7 @@ const handleDisplay = {
     },
 
     resetDisplay: function() {
-        this.setInformationSection("Choose youre mark")
+        this.setInformationSection(`${game.getCurrentPlayer().name}'s turn`)
         game.resetGame();
         this.boardElement.innerHTML = '';
         this.renderBoard();
@@ -183,16 +187,42 @@ const handleDisplay = {
 
 }
 
-//New game btn
+handleDisplay.resetDisplay();
+
+
+//Fetch player names
 const newGameBtn = document.querySelector('#new-game-btn');
 newGameBtn.addEventListener('click', () => {
-    handleDisplay.resetDisplay();
+    const dialog = document.querySelector('.enter-names-dialog');
+    dialog.showModal();
+    // newGameBtn.style.visibility = 'hidden';
+    // const main = document.querySelector('.main');
+    // main.style.display = 'flex';
+    // main.style.visibility = 'hidden';
 })
 
-// handleDisplay.resetDisplay();
+const startGameBtn = document.querySelector('#start-game-btn');
+startGameBtn.addEventListener('click', ()=> {
+    const form = document.querySelector('.enter-names-form');
+    form.addEventListener('submit', (e) => {
+        // e.preventDefault();
+        const playerOneName = document.querySelector('#player-one-name').value;
+        const playerTwoName = document.querySelector('#player-two-name').value;
+
+        game.setPlayerOneName(playerOneName);
+        game.setPlayerTwoName(playerTwoName);
+
+        document.querySelector('#player-one').textContent = playerOneName;
+
+        document.querySelector('#player-two').textContent = playerTwoName;
+
+        handleDisplay.resetDisplay();
+
+        console.log({playerOne}, {playerTwo})
+    })
+})
 
 
 //Get player names
-const dialog = document.querySelector('.enter-names-dialog');
-dialog.showModal();
+
 

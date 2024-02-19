@@ -44,6 +44,7 @@ textarea {
 .main {
     display: flex;
     justify-content: space-around;
+    /* display: none; */
 }
 
 .game-board {
