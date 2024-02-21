@@ -15,8 +15,9 @@
         </div>
     </div>
 
-    <dialog class="enter-names-dialog">
-        <form class="enter-names-form" action="get" method="dialog">
+    <dialog class="enter-names-dialog" open>
+        <form class="enter-names-form" method="dialog">
+            <p>Enter Players Names</p>
             <label for="player-one-name">Player one (x):</label>
             <input type="text" id="player-one-name"
             name="player-one-name" required>
@@ -29,7 +30,7 @@
         </form>
     </dialog>
 
-    <div class="main">
+    <div class="main hidden">
         <div class="player-info">
             <p class="player-name" id="player-one">player one</p>
             <p class="score-counter">0</p>
@@ -44,7 +45,7 @@
     </div>
 
     <div class="bottom">
-        <button id="new-game-btn" class="btn">New Game</button>
+        <button id="new-game-btn" class="btn hidden">New Game</button>
     </div>
 </body>
 </html>

@@ -32,7 +32,7 @@ textarea {
 /* Top section */
 .page-header {
     font-size: 3rem;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
 }
 
 .display-information {
@@ -44,7 +44,6 @@ textarea {
 .main {
     display: flex;
     justify-content: space-around;
-    /* display: none; */
 }
 
 .game-board {
@@ -96,19 +95,18 @@ textarea {
     background-color: rgba(200, 198, 198, 0.764);
 }
 
+.hidden {
+    visibility: hidden;
+}
 
 /* Dialog section */
 .enter-names-dialog {
     margin: auto;
-    background-color:  rgba(220, 219, 220, 0.218);
+    background-color:rgba(220, 219, 220, 0.218);
     border: none;
     border-radius: 10px;
     box-shadow: var(--box-shadow);
 }
-
-/* .enter-names-dialog::backdrop {
-    background: linear-gradient(45deg, red ,purple);
-} */
 
 .enter-names-form {
     display: grid;
@@ -118,6 +116,11 @@ textarea {
     padding: 25px 15px;
     font-size: 1.3rem;
     background-color: transparent;
+}
+
+.enter-names-form p {
+    grid-column: span 2;
+    font-weight: bold;
 }
 
 .enter-names-form input {

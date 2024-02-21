@@ -177,35 +177,7 @@ const handleDisplay = {
         informationSection.textContent = information;
     },
 
-    resetDisplay: function() {
-        this.setInformationSection(`${game.getCurrentPlayer().name}'s turn`)
-        game.resetGame();
-        this.boardElement.innerHTML = '';
-        this.renderBoard();
-        this.handleTurn();
-    }
-
-}
-
-handleDisplay.resetDisplay();
-
-
-//Fetch player names
-const newGameBtn = document.querySelector('#new-game-btn');
-newGameBtn.addEventListener('click', () => {
-    const dialog = document.querySelector('.enter-names-dialog');
-    dialog.showModal();
-    // newGameBtn.style.visibility = 'hidden';
-    // const main = document.querySelector('.main');
-    // main.style.display = 'flex';
-    // main.style.visibility = 'hidden';
-})
-
-const startGameBtn = document.querySelector('#start-game-btn');
-startGameBtn.addEventListener('click', ()=> {
-    const form = document.querySelector('.enter-names-form');
-    form.addEventListener('submit', (e) => {
-        // e.preventDefault();
+    setPlayerNames: function() {
         const playerOneName = document.querySelector('#player-one-name').value;
         const playerTwoName = document.querySelector('#player-two-name').value;
 
@@ -215,14 +187,43 @@ startGameBtn.addEventListener('click', ()=> {
         document.querySelector('#player-one').textContent = playerOneName;
 
         document.querySelector('#player-two').textContent = playerTwoName;
+    },
 
+    resetDisplay: function() {
+        console.log(game.getCurrentPlayer())
+    
+        game.resetGame();
+        this.setInformationSection(`${game.getCurrentPlayer().name}'s turn`)
+        this.boardElement.innerHTML = '';
+        this.renderBoard();
+        this.handleTurn();
+    }
+
+}
+
+// handleDisplay.resetDisplay();
+
+//Fetch player names
+const startGameBtn = document.querySelector('#start-game-btn');
+const newGameBtn = document.querySelector('#new-game-btn');
+
+newGameBtn.addEventListener('click', () => {
+    handleDisplay.resetDisplay();
+})
+
+startGameBtn.addEventListener('click', ()=> {
+    const form = document.querySelector('.enter-names-form');
+    form.addEventListener('submit', (e) => {
+        // e.preventDefault();
+        const main = document.querySelector('.main');
+        newGameBtn.classList.remove('hidden');
+        main.classList.remove("hidden");
+
+        handleDisplay.setPlayerNames();
         handleDisplay.resetDisplay();
-
-        console.log({playerOne}, {playerTwo})
     })
 })
 
 
-//Get player names
 
 
