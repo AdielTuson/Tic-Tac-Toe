@@ -1,7 +1,18 @@
 const createPlayer = (name, symbol) => {
+    let score = 0;
+
+    const setScore = () => {
+        score++
+    }
+
+    const getScore = () => score;
+    
+
     return { 
         name, 
-        symbol 
+        symbol,
+        setScore,
+        getScore 
     };
 };
 
@@ -15,7 +26,6 @@ const Gameboard = (function () {
         [" ", " ", " "]
     ];
     
-    console.log(board)
     //Method for getting entire board for our UI
     const getBoard = () => board;
 
@@ -142,14 +152,14 @@ const handleDisplay = {
             const isWin = Gameboard.checkForWin();
             if (isWin === false) return;
             if (isWin === true) {
-                let message = `${winner} is the winner!`;
+                let message = `${winner.name} is the winner!`;
                 this.setInformationSection(message);
-                // this.resetDisplay();
+                console.log(winner.getScore())
+                this.updatePlayerScore(winner);
             }
             else if (isWin === "Tie") {
                 let message = "Its a Tie!"
                 this.setInformationSection(message);
-                // this.resetDisplay();
             }
         }
 
@@ -158,7 +168,7 @@ const handleDisplay = {
             cell.addEventListener('click', () => {
                 const cellRow = cell.getAttribute('data-row');
                 const cellColumn = cell.getAttribute('data-column');
-                const thisPlayer = getPlayerName();
+                const thisPlayer = game.getCurrentPlayer();
 
                 //Prevent placing mark in a non empty space
                 if (cell.textContent !== '') return;
@@ -175,6 +185,8 @@ const handleDisplay = {
     setInformationSection : function(information) {
         const informationSection = document.querySelector('.display-information');
         informationSection.textContent = information;
+
+        
     },
 
     setPlayerNames: function() {
@@ -189,6 +201,21 @@ const handleDisplay = {
         document.querySelector('#player-two').textContent = playerTwoName;
     },
 
+    updatePlayerScore: function(player) {
+        player.setScore();
+
+        const playerOneScore = document.querySelector('#player-one-score');
+        const playerTwoScore = document.querySelector('#player-two-score');
+
+        if (player.symbol === 'X') {
+            playerOneScore.textContent = player.getScore();
+        }
+
+        else if ( player.symbol === 'O') {
+            playerTwoScore.textContent = player.getScore();
+        }
+    },
+
     resetDisplay: function() {
         game.resetGame();
         this.setInformationSection(`${game.getCurrentPlayer().name}'s turn`)
@@ -199,20 +226,17 @@ const handleDisplay = {
 
 }
 
-// handleDisplay.resetDisplay();
 
-//Fetch player names
-const startGameBtn = document.querySelector('#start-game-btn');
+//Initiate game
 const newGameBtn = document.querySelector('#new-game-btn');
-
 newGameBtn.addEventListener('click', () => {
     handleDisplay.resetDisplay();
 })
 
+const startGameBtn = document.querySelector('#start-game-btn');
 startGameBtn.addEventListener('click', ()=> {
     const form = document.querySelector('.enter-names-form');
-    form.addEventListener('submit', (e) => {
-        // e.preventDefault();
+    form.addEventListener('submit', () => {
         const main = document.querySelector('.main');
         newGameBtn.classList.remove('hidden');
         main.classList.remove("hidden");
@@ -221,6 +245,10 @@ startGameBtn.addEventListener('click', ()=> {
         handleDisplay.resetDisplay();
     })
 })
+
+const playerOneScore = document.querySelector('#player-one-score');
+
+
 
 
 
