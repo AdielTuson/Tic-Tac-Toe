@@ -190,8 +190,6 @@ const handleDisplay = {
     },
 
     resetDisplay: function() {
-        console.log(game.getCurrentPlayer())
-    
         game.resetGame();
         this.setInformationSection(`${game.getCurrentPlayer().name}'s turn`)
         this.boardElement.innerHTML = '';

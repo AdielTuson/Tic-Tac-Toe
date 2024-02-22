@@ -20,11 +20,11 @@
             <p>Enter Players Names</p>
             <label for="player-one-name">Player one (x):</label>
             <input type="text" id="player-one-name"
-            name="player-one-name" required>
+            name="player-one-name" required maxlength="15">
 
             <label for="player-two-name">Player two (O):</label>
             <input type="text" id="player-two-name"
-            name="player-two-name" required>
+            name="player-two-name" required maxlength="15">
 
             <button id="start-game-btn" class="btn">Start Game</button>
         </form>
@@ -32,15 +32,15 @@
 
     <div class="main hidden">
         <div class="player-info">
-            <p class="player-name" id="player-one">player one</p>
             <p class="score-counter">0</p>
+            <p class="player-name" id="player-one">player one</p>
         </div>
 
         <div class="game-board"></div>
 
         <div class="player-info">
-            <p class="player-name" id="player-two">player two</p>
             <p class="score-counter">0</p>
+            <p class="player-name" id="player-two">player two</p>
         </div>
     </div>
 
