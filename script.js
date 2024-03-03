@@ -109,7 +109,6 @@ function GameController() {
 
     const resetGame = () => {
         board.resetBoard();
-        currentPlayer = playerOne;
     }
 
     return { playTurn, resetGame, getCurrentPlayer, setPlayerOneName, setPlayerTwoName }
@@ -148,7 +147,8 @@ const handleDisplay = {
             cellElement.textContent = getPlayerMark();
         }
 
-            let enableInteraction = true;
+        let enableInteraction = true;
+        
         const handleWin = (winner) => {
             const isWin = Gameboard.checkForWin();
             if (isWin === false) return;
@@ -173,7 +173,6 @@ const handleDisplay = {
                 const cellRow = cell.getAttribute('data-row');
                 const cellColumn = cell.getAttribute('data-column');
                 const thisPlayer = game.getCurrentPlayer();
-
                 //Prevent placing mark in a non empty space
                 if (cell.textContent !== '') return;
 
@@ -248,8 +247,6 @@ startGameBtn.addEventListener('click', ()=> {
         handleDisplay.resetDisplay();
     })
 })
-
-const playerOneScore = document.querySelector('#player-one-score');
 
 
 
