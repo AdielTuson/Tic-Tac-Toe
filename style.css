@@ -74,8 +74,8 @@ textarea {
     width: clamp(100px, 20%, 350px);
     display: flex;
     flex-direction: column;
-    padding: 20px 10px;
-    gap: 10px;
+    padding: 40px 10px;
+    gap: 50px;
 }
 
 .player-name {
@@ -84,7 +84,14 @@ textarea {
 }
 
 .score-counter {
-    font-size: 3.5rem;
+    font-size: clamp(60px, 6vw, 4rem);
+    display: flex;
+    flex-direction: column;
+}
+
+.score-counter::before {
+    content: 'Wins: ';
+    font-size: clamp(30px, 3vw, 2rem);
 }
 
 

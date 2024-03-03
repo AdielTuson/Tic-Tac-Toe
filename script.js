@@ -148,6 +148,7 @@ const handleDisplay = {
             cellElement.textContent = getPlayerMark();
         }
 
+            let enableInteraction = true;
         const handleWin = (winner) => {
             const isWin = Gameboard.checkForWin();
             if (isWin === false) return;
@@ -161,11 +162,14 @@ const handleDisplay = {
                 let message = "Its a Tie!"
                 this.setInformationSection(message);
             }
+            enableInteraction = false;
         }
 
         const boardCells = document.querySelectorAll('.cell');
         boardCells.forEach((cell) => {
             cell.addEventListener('click', () => {
+                if (enableInteraction === false) return;
+
                 const cellRow = cell.getAttribute('data-row');
                 const cellColumn = cell.getAttribute('data-column');
                 const thisPlayer = game.getCurrentPlayer();
@@ -176,7 +180,7 @@ const handleDisplay = {
                 updateCellContent(cell);
                 
                 game.playTurn(cellRow, cellColumn);
-                this.setInformationSection(`${getPlayerName()}'s turn`);
+                this.setInformationSection(`${getPlayerName()}'s turn (${getPlayerMark()})`);
                 handleWin(thisPlayer);
             })
         })
@@ -185,8 +189,6 @@ const handleDisplay = {
     setInformationSection : function(information) {
         const informationSection = document.querySelector('.display-information');
         informationSection.textContent = information;
-
-        
     },
 
     setPlayerNames: function() {
@@ -218,10 +220,11 @@ const handleDisplay = {
 
     resetDisplay: function() {
         game.resetGame();
-        this.setInformationSection(`${game.getCurrentPlayer().name}'s turn`)
+        this.setInformationSection(`${game.getCurrentPlayer().name}'s turn (${game.getCurrentPlayer().symbol})`)
         this.boardElement.innerHTML = '';
         this.renderBoard();
         this.handleTurn();
+        enableInteraction = true;
     }
 
 }
